@@ -3,13 +3,14 @@ import './App.css';
 import Playlist from './components/SongList';
 import ListItem from './components/ListItem';
 import DescriptionBar from './components/DescriptionBar';
-import Searchbar from './components/searchbar';
+import SearchBar from './components/SearchBar';
 import { Container, Header, } from 'semantic-ui-react';
 import youtube from './apis/youtube';
 import API_KEY from './config.js';
 import VideoDetail from './components/VideoDetail';
 
 const KEY = API_KEY;
+
 const playList = [
   {
     title: "Michael Jackson - Beat it",
@@ -31,7 +32,7 @@ const playList = [
 
 class App extends React.Component {
     state = {
-      term: 'something',
+      term: '',
       isLoading:false,
       videos: [],
       selectedVideo: null,
@@ -58,14 +59,15 @@ class App extends React.Component {
   }
 
   
-  onTermSubmit = async (term) => {
+  onTermSubmit = async () => {
+    console.log(this.state.term)
     const response = await youtube.get('/search', {
       params: {
+        q: this.state.term,
         part: 'snippet',
         maxResults: 5,
         key: KEY,
-        q: term
-      }
+      },
     });
     this.setState({
       videos: response.data.items,
