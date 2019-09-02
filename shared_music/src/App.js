@@ -3,10 +3,13 @@ import './App.css';
 import Playlist from './components/SongList';
 // import ListItem from './components/ListItem';
 import DescriptionBar from './components/DescriptionBar';
-import Searchbar from './components/searchbar';
+import SearchBar from './components/SearchBar';
 import { Container, Header, } from 'semantic-ui-react';
 import youtube from './apis/youtube';
-import axios from 'axios';
+import API_KEY from './config.js';
+import VideoDetail from './components/VideoDetail';
+
+const KEY = API_KEY;
 
 const playList = [
   {
@@ -33,16 +36,13 @@ const playList = [
 
 
 class App extends React.Component {
-  constructor(props){
-    super(props);
-
-    this.state = {
+    state = {
       term: '',
       isLoading:false,
+      videos: [],
+      selectedVideo: null,
       list: playList,
-    };
   }
-
 
   componentDidMount() {
     console.log("Mounted..")
@@ -61,15 +61,18 @@ class App extends React.Component {
 
   onInputChange = (event) => {
     this.setState({term: event.target.value})
-    console.log('inputchange');
   }
 
   
-  onTermSubmit = async (term) => {
-    const response = await youtube.get('/search',{
-      params:{
-        q: term
-      }
+  onTermSubmit = async () => {
+    console.log(this.state.term)
+    const response = await youtube.get('/search', {
+      params: {
+        q: this.state.term,
+        part: 'snippet',
+        maxResults: 5,
+        key: KEY,
+      },
     });
     this.setState({
       videos: response.data.items,
@@ -77,16 +80,30 @@ class App extends React.Component {
     });
   }
 
+
   render(){
     return(
       <div>
         <Container text style={{paddingTop:10}}>
           <Header as='h2' textAlign='center'>Music Share</Header>
-          <Searchbar value={this.state.term} onChange={this.onInputChange} onSearch={this.onTermSubmit}/>
+          <SearchBar 
+            value={this.state.term} 
+            onChange={this.onInputChange} 
+            onTermSubmit={this.onTermSubmit}
+          />
+          <div className="ui grid">
+            <div className="ui row">
+              <div className="eleven wide column">
+                <VideoDetail video={this.state.selectedVideo} />
+              </div>
+              <div className="five wide column">
+                <Playlist playlist={this.state.list} />
+              </div>
+            </div>
+          </div>
 
-        </Container>
-        <Playlist playlist={this.state.list} />
-      </div> 
+        </Container> 
+      </div>
     );
   }
 
