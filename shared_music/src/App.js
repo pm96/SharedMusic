@@ -32,6 +32,22 @@ const playList = [
     uploader: "Me&You",
     length: "5:12"
   },
+  {
+    title: "FooBar - HelloWorld",
+    uploader: "Me&You",
+    length: "5:12"
+  },
+  {
+    title: "FooBar - HelloWorld",
+    uploader: "Me&You",
+    length: "5:12"
+  },
+  {
+    title: "FooBar - HelloWorld",
+    uploader: "Me&You",
+    length: "5:12"
+  },
+  
 ]
 
 
@@ -84,21 +100,19 @@ class App extends React.Component {
   render(){
     return(
       <div>
-        <Container text style={{paddingTop:10}}>
+        <Container style={{paddingTop:10}}>
           <Header as='h2' textAlign='center'>Music Share</Header>
           <SearchBar 
             value={this.state.term} 
             onChange={this.onInputChange} 
             onTermSubmit={this.onTermSubmit}
           />
-          <div className="ui grid">
-            <div className="ui row">
-              <div className="eleven wide column">
-                <VideoDetail video={this.state.selectedVideo} />
-              </div>
-              <div className="five wide column">
-                <Playlist playlist={this.state.list} />
-              </div>
+          <div className="ui container stackable divided relaxed two column grid" style={{ marginTop: 30}}>
+            <div className="nine wide column">
+              <VideoDetail video={this.state.selectedVideo} />
+            </div>
+            <div className="seven wide column">
+              <Playlist playlist={this.state.list} />
             </div>
           </div>
 
