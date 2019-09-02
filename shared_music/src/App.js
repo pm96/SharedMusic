@@ -1,10 +1,10 @@
 import React from 'react';
 import './App.css';
 import Playlist from './components/SongList';
-// import ListItem from './components/ListItem';
-import DescriptionBar from './components/DescriptionBar';
+//import ListItem from './components/ListItem';
+//import DescriptionBar from './components/DescriptionBar';
 import SearchBar from './components/SearchBar';
-import { Container, Header, } from 'semantic-ui-react';
+import { Container, Header,  } from 'semantic-ui-react';
 import youtube from './apis/youtube';
 import API_KEY from './config.js';
 import VideoDetail from './components/VideoDetail';
@@ -55,7 +55,7 @@ class App extends React.Component {
     state = {
       term: '',
       isLoading:false,
-      videos: [],
+      videos: null,
       selectedVideo: null,
       list: playList,
   }
@@ -64,24 +64,20 @@ class App extends React.Component {
     console.log("Mounted..")
   }
 
-
   addToList = () => {
     // add song to playlist
+    console.log('adding')
   }
-
 
   removeFromList = () => {
     // remove song from playlist
   }
 
-
   onInputChange = (event) => {
     this.setState({term: event.target.value})
   }
-
   
   onTermSubmit = async () => {
-    console.log(this.state.term)
     const response = await youtube.get('/search', {
       params: {
         q: this.state.term,
@@ -92,9 +88,10 @@ class App extends React.Component {
     });
     this.setState({
       videos: response.data.items,
-      selectedVideo: response.data.items[0]
+      selectedVideo: response.data.items[0],
     });
   }
+
 
 
   render(){
@@ -106,6 +103,8 @@ class App extends React.Component {
             value={this.state.term} 
             onChange={this.onInputChange} 
             onTermSubmit={this.onTermSubmit}
+            videosToShow={this.state.videos}
+            addToQueue={this.addToList}
           />
           <div className="ui container stackable divided relaxed two column grid" style={{ marginTop: 30}}>
             <div className="nine wide column">
