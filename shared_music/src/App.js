@@ -1,43 +1,35 @@
 import React from 'react';
 import './App.css';
-import DescriptionBar from './components/DescriptionBar';
-import ListItem from './components/ListItem';
-import Searchbar from './components/Searchbar';
-import SongList from './components/SongList';
+//import DescriptionBar from './components/DescriptionBar';
+//import ListItem from './components/ListItem';
+import SearchBar from './components/SearchBar';
+//import SongList from './components/SongList';
 import { Container, Header, } from 'semantic-ui-react';
 import youtube from './apis/youtube';
-import axios from 'axios';
+import API_KEY from './config.js';
+import VideoDetail from './components/VideoDetail';
+
+const KEY = API_KEY;
 
 class App extends React.Component {
-  constructor(props){
-    super(props);
-
-    this.state = {
-      term: '',
+    state = {
+      term: 'something',
       isLoading:false,
-    };
+      videos: [],
+      selectedVideo: null,
   }
 
-  render(){
-    return(
-      <div>
-        <Container text style={{paddingTop:10}}>
-          <Header as='h2' textAlign='center'>Music Share</Header>
-          <Searchbar value={this.state.term} onChange={this.onInputChange} onSearch={this.onTermSubmit}/>
-
-        </Container>
-      </div> 
-    );
-  }
 
   onInputChange = (event) => {
     this.setState({term: event.target.value})
-    console.log('inputchange');
   }
 
   onTermSubmit = async (term) => {
-    const response = await youtube.get('/search',{
-      params:{
+    const response = await youtube.get('/search', {
+      params: {
+        part: 'snippet',
+        maxResults: 5,
+        key: KEY,
         q: term
       }
     });
@@ -45,6 +37,33 @@ class App extends React.Component {
       videos: response.data.items,
       selectedVideo: response.data.items[0]
     });
+  }
+
+
+  render(){
+    return(
+      <div>
+        <Container text style={{paddingTop:10}}>
+          <Header as='h2' textAlign='center'>Music Share</Header>
+          <SearchBar 
+            value={this.state.term} 
+            onChange={this.onInputChange} 
+            onTermSubmit={this.onTermSubmit}
+          />
+          <div className="ui grid">
+            <div className="ui row">
+              <div className="eleven wide column">
+                <VideoDetail video={this.state.selectedVideo} />
+              </div>
+              <div className="five wide column">
+                <p>list here</p>
+              </div>
+            </div>
+          </div>
+
+        </Container>
+      </div> 
+    );
   }
 
 }
