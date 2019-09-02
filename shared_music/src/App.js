@@ -32,7 +32,7 @@ class App extends React.Component {
 
   onInputChange = (event) => {
     this.setState({term: event.target.value})
-    console.log('inputchange')
+    console.log('inputchange');
   }
 
   onTermSubmit = async (term) => {

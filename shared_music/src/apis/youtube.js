@@ -1,6 +1,7 @@
 import axios from 'axios';
+import Config from '../../../../../../../../palmos/config';
 
-const KEY = 'AIzaSyCUCZoztUM3c1bc7lSWJDahhZuIb1D3t5w';
+const KEY = Config.API_KEY;
 
 export default axios.create({
     baseURL:'https://googleapis.com/youtube/v3',
