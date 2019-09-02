@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css';
 import Playlist from './components/SongList';
-import ListItem from './components/ListItem';
+// import ListItem from './components/ListItem';
 import DescriptionBar from './components/DescriptionBar';
 import Searchbar from './components/searchbar';
 import { Container, Header, } from 'semantic-ui-react';
@@ -23,6 +23,11 @@ const playList = [
     title: "Sean Paul - Press it up",
     uploader: "askSteve",
     length: "3:54"
+  },
+  {
+    title: "FooBar - HelloWorld",
+    uploader: "Me&You",
+    length: "5:12"
   },
 ]
 
