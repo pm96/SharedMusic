@@ -37,27 +37,6 @@ class SearchBar extends React.Component{
                                 </Container>
                             </Grid.Column>
                         )}
-                            {/* <Grid.Column onClick={this.props.addToQueue}>
-                                <img src={videos[0].snippet.thumbnails.default.url}/>
-                                <p>{videos[0].snippet.title}</p>
-                            </Grid.Column>
-                            <Grid.Column onClick={this.props.addToQueue}>
-                                <img src={videos[1].snippet.thumbnails.default.url}/>
-                                <p>{videos[1].snippet.title}</p>
-                            </Grid.Column>
-                            <Grid.Column onClick={this.props.addToQueue}>
-                                <img src={videos[2].snippet.thumbnails.default.url}/>
-                                <p>{videos[2].snippet.title}</p>
-                            </Grid.Column>
-                            <Grid.Column onClick={this.props.addToQueue}>
-                                <img src={videos[3].snippet.thumbnails.default.url}/>
-                                <p>{videos[3].snippet.title}</p>
-                            </Grid.Column>
-                            <Grid.Column onClick={this.props.addToQueue}>
-                                <img src={videos[4].snippet.thumbnails.default.url}/>
-                                <p>{videos[4].snippet.title}</p>
-                            </Grid.Column> */}
-
                         </Grid.Row>
                     </Grid>
                 </div>

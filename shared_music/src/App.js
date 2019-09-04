@@ -11,24 +11,6 @@ import VideoDetail from './components/VideoDetail';
 
 const KEY = API_KEY;
 
-// const playList = [
-//   {
-//     title: "Michael Jackson - Beat it",
-//     uploader: "Jokestar64",
-//     length: "3:43"
-//   }, 
-//   {
-//     title: "Kygo - Firestone",
-//     uploader: "noob_master69",
-//     length: "4:27"
-//   },
-//   {
-//     title: "Sean Paul - Press it up",
-//     uploader: "askSteve",
-//     length: "3:54"
-//   },
-
-
 class App extends React.Component {
     state = {
       term: '',
@@ -105,14 +87,9 @@ class App extends React.Component {
 
   }
 
-
-
   render(){
-
     console.log("Video object: ", this.state.videos)
     
-    
-
     return(
       <div>
         <Container style={{paddingTop:10}}>
