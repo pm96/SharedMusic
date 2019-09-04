@@ -4,7 +4,7 @@ import Playlist from './components/SongList';
 //import ListItem from './components/ListItem';
 //import DescriptionBar from './components/DescriptionBar';
 import SearchBar from './components/searchbar';
-import { Container, Header,  } from 'semantic-ui-react';
+import { Container, Header, Button,  } from 'semantic-ui-react';
 import youtube from './apis/youtube';
 import * as API from './config.js';
 import VideoDetail from './components/VideoDetail';
@@ -23,7 +23,6 @@ class App extends React.Component {
   componentDidMount() {
     console.log("Mounted..")
   }
-
 
   addToList = (event) => {
     // add song to playlist
@@ -53,7 +52,6 @@ class App extends React.Component {
     }
   }
 
-
   removeFromList = (event) => {
     // remove song from playlist
     const id = event.currentTarget.id;
@@ -71,6 +69,12 @@ class App extends React.Component {
 
   }
 
+  emptyList = () => {
+    this.setState({
+      list: [],
+      selectedVideo: null,  
+    })
+  }
 
   onInputChange = (event) => {
     this.setState({term: event.target.value})
@@ -114,6 +118,7 @@ class App extends React.Component {
             </div>
             <div className="seven wide column">
               <Playlist playlist={this.state.list} songDelete={this.removeFromList} />
+              <Button content="empty list" disabled={this.state.list.length <1 ? true : false} onClick={this.emptyList}/>
             </div>
           </div>}
 

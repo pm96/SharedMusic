@@ -1,8 +1,16 @@
 import React from 'react';
+import { Icon, Container, Card, Placeholder } from 'semantic-ui-react';
 
 const VideoDetail = ({video}) => {
     if(!video){
-        return <div>Loading..</div>;
+        return (
+            <Card fluid>
+                <Card.Content>
+                    <Placeholder fluid>
+                        <Placeholder.Image square />
+                    </Placeholder>
+                </Card.Content>
+            </Card>);
     }
 
     const videoSrc = `https://www.youtube.com/embed/${video.id.videoId}`;
