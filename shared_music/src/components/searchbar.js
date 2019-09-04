@@ -14,7 +14,7 @@ class SearchBar extends React.Component{
         }else{
             return(
                 <div className="ui segment">
-                    {console.log(videos)}
+                    {/* {console.log(videos)} */}
                     <Grid divided='vertically'>
                         <Grid.Row columns="5">
                         { Object.entries(videos).map(([key,video]) => 

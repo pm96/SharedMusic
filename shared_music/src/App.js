@@ -54,18 +54,23 @@ class App extends React.Component {
     if(this.state.list.length > 0 && video !== undefined) {
 
       updatedPlaylist = [...this.state.list, video];
-      
       this.setState({
         list: updatedPlaylist
       })
       
-    } else if(video !== undefined) {
+    } else {
+
       updatedPlaylist.push(video);
       this.setState({
-        list: updatedPlaylist,
+        list: [...updatedPlaylist],
       })
 
     }
+  }
+
+
+  creatingNewList = () => {
+
   }
 
 
@@ -73,8 +78,31 @@ class App extends React.Component {
     // remove song from playlist
 
     const id = event.target.id;
+    
+    // let list = [...this.state.list];
+
+    // let newlist = [];
+
+    // list.map(item => {
+    //     if(id !== item.id.videoId) {
+    //       newlist.push(item)
+    //     }
+    //     return newlist
+      // })
+
+    // this.setState({
+    //   list: [...newlist]
+    // })
+    
     let updatedPlaylist = [...this.state.list];
-    updatedPlaylist.splice(id,1);
+    console.log("State playlist: ", this.state.list)
+    console.log("List before splice: ", updatedPlaylist);
+
+    let newList = updatedPlaylist.splice(id,1);
+
+    console.log("List after splice: ", updatedPlaylist);
+    console.log("List after splice: ", newList);
+    console.log("Removing vid with ID: ", id);
 
     this.setState({
       list: [...updatedPlaylist]
@@ -109,9 +137,7 @@ class App extends React.Component {
 
   render(){
 
-    console.log("Video object: ", this.state.videos)
-    
-    
+    console.log("Playlist from state: ", this.state.list)
 
     return(
       <div>
