@@ -76,6 +76,23 @@ class App extends React.Component {
     })
   }
 
+  changeQueueOrder_AND_playVideo = (event) => {
+    let clickedID = event.currentTarget.id;
+    let oldArr = this.state.list;
+
+
+    let toStart = oldArr[clickedID];
+
+    oldArr.splice(clickedID,1);
+
+    oldArr.unshift(toStart); //noe funky herifra og ned også
+ 
+    this.setState({
+      list: oldArr,
+      selectedVideo: oldArr[0],
+    });
+  }
+
   onInputChange = (event) => {
     this.setState({term: event.target.value})
   }
@@ -117,7 +134,7 @@ class App extends React.Component {
               <VideoDetail video={this.state.selectedVideo} />
             </div>
             <div className="seven wide column">
-              <Playlist playlist={this.state.list} songDelete={this.removeFromList} />
+              <Playlist playlist={this.state.list} songDelete={this.removeFromList} changeQueueOrder_AND_playVideo={this.changeQueueOrder_AND_playVideo}/>
               <Button content="empty list" disabled={this.state.list.length <1 ? true : false} onClick={this.emptyList}/>
             </div>
           </div>}
