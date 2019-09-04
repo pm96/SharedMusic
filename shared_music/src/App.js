@@ -6,10 +6,10 @@ import Playlist from './components/SongList';
 import SearchBar from './components/searchbar';
 import { Container, Header,  } from 'semantic-ui-react';
 import youtube from './apis/youtube';
-import API_KEY from './config.js';
+import * as API from './config.js';
 import VideoDetail from './components/VideoDetail';
 
-const KEY = API_KEY;
+const KEY = API.API_KEY_2;
 
 class App extends React.Component {
     state = {
@@ -27,7 +27,7 @@ class App extends React.Component {
 
   addToList = (event) => {
     // add song to playlist
-    const id = event.target.id;
+    const id = event.currentTarget.id;
     let updatedPlaylist = [];
     const video = this.state.videos[id];
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Input, Grid, List, Container, Button } from 'semantic-ui-react';
-//import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-//import { faPlus } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPlus } from '@fortawesome/free-solid-svg-icons'
 
 class SearchBar extends React.Component{
 
@@ -20,8 +20,17 @@ class SearchBar extends React.Component{
                                         <img src={videos[key].snippet.thumbnails.default.url} alt={"alt for img"}/>
                                         <p style={{ maxWidth: "120px", overflow: "hidden", textOverflow: "ellipsis", height: "60px", margin: "0 auto" }}>{videos[key].snippet.title}</p>
                                     </List.Item>
-                                    <Button onClick={this.props.addToQueue} id={key} style={{ width: "70%", margin: "10px auto", display: "flex", border: "none", background: "#7fffd4" }}>
-                                        Add to playlist
+                                    <Button 
+                                        onClick={this.props.addToQueue} 
+                                        id={key} 
+                                        style={{ 
+                                            margin: "10px auto", 
+                                            display: "flex", 
+                                            border: "none", 
+                                            background: "#7fffd4" 
+                                        }}
+                                    >
+                                        <FontAwesomeIcon icon={faPlus} />
                                     </Button>
                                 </Container>
                             </Grid.Column>

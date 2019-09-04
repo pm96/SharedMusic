@@ -1,5 +1,5 @@
 import React from 'react';
-import { Container, List, Button, Icon } from 'semantic-ui-react';
+import { Container, List, Button } from 'semantic-ui-react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleUp, faAngleDown, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 
