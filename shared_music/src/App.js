@@ -6,10 +6,10 @@ import Playlist from './components/SongList';
 import SearchBar from './components/searchbar';
 import { Container, Header,  } from 'semantic-ui-react';
 import youtube from './apis/youtube';
-import API_KEY from './config.js';
+import * as API from './config.js';
 import VideoDetail from './components/VideoDetail';
 
-const KEY = API_KEY;
+const KEY = API.API_KEY_2;
 
 class App extends React.Component {
     state = {
@@ -38,6 +38,7 @@ class App extends React.Component {
       updatedPlaylist = [...this.state.list, video];
       this.setState({
         list: updatedPlaylist,
+        selectedVideo: updatedPlaylist[0],
       });
       
       
@@ -46,6 +47,7 @@ class App extends React.Component {
       updatedPlaylist.push(video);
       this.setState({
         list: [...updatedPlaylist],
+        selectedVideo: updatedPlaylist[0],
       })
 
     }
@@ -59,12 +61,12 @@ class App extends React.Component {
     let updatedPlaylist = [...this.state.list];
     updatedPlaylist.splice(id, 1);
 
-    //Used to store deleted item. 
-    //let deletedItem = updatedPlaylist.splice(id,1);
-    //console.log(updatedPlaylist);
+    //removes video from screen if nothing in queue
+    const videoValue = updatedPlaylist[0] !== null ? updatedPlaylist[0]: 'is === null';
 
     this.setState({
       list: updatedPlaylist,
+      selectedVideo: videoValue,
     });
 
   }
@@ -88,7 +90,6 @@ class App extends React.Component {
     
     this.setState({
       videos: response.data.items,
-      selectedVideo: response.data.items[0],
     });
   }
 
