@@ -1,5 +1,5 @@
 import React from 'react';
-import { Container, List, Button, Icon } from 'semantic-ui-react';
+import { Container, List, Button } from 'semantic-ui-react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleUp, faAngleDown, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 
@@ -24,14 +24,10 @@ const ListItem = ({title, length, uploader, songDelete, id}) => (
             </List.Description>
             <Button 
                 onClick={songDelete} 
-                id={id} 
-                floated="right" 
-                size="mini" 
-                color="red" 
-                style={{ marginBottom: "auto"}}
-                icon
-                >
-                    <Icon name="trash" />
+                id={id} floated="right" 
+                size="mini" color="red" 
+                style={{ marginBottom: "auto"}}>
+                    <FontAwesomeIcon icon={faTrashAlt} size={"lg"} />
             </Button>
         </Container>
     </List.Item>

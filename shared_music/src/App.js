@@ -27,7 +27,7 @@ class App extends React.Component {
 
   addToList = (event) => {
     // add song to playlist
-    const id = event.target.id;
+    const id = event.currentTarget.id;
     let updatedPlaylist = [];
     const video = this.state.videos[id];
 
@@ -57,7 +57,7 @@ class App extends React.Component {
   removeFromList = (event) => {
     // remove song from playlist
     const id = event.currentTarget.id;
-
+    
     let updatedPlaylist = [...this.state.list];
     updatedPlaylist.splice(id, 1);
 
