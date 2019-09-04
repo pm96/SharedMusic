@@ -38,8 +38,9 @@ class App extends React.Component {
       updatedPlaylist = [...this.state.list, video];
       
       this.setState({
-        list: updatedPlaylist
-      })
+        list: updatedPlaylist,
+      });
+      
       
     } else if(video !== undefined) {
       updatedPlaylist.push(video);
@@ -49,7 +50,6 @@ class App extends React.Component {
 
     }
   }
-
 
   removeFromList = (event) => {
     // remove song from playlist
@@ -69,27 +69,26 @@ class App extends React.Component {
     this.setState({term: event.target.value})
   }
 
-  
   onTermSubmit = async () => {
     const response = await youtube.get('/search', {
       params: {
         q: this.state.term,
         part: 'snippet',
         maxResults: 5,
+        type: 'video',
         key: KEY,
+        
       },
     });
-
+    
     this.setState({
       videos: response.data.items,
       selectedVideo: response.data.items[0],
     });
-
   }
 
   render(){
-    console.log("Video object: ", this.state.videos)
-    
+
     return(
       <div>
         <Container style={{paddingTop:10}}>

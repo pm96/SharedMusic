@@ -1,20 +1,9 @@
 import React from 'react';
 import { Input, Grid, List, Container, Button } from 'semantic-ui-react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlus } from '@fortawesome/free-solid-svg-icons'
+//import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+//import { faPlus } from '@fortawesome/free-solid-svg-icons'
 
 class SearchBar extends React.Component{
-    state = {
-        options:[],
-    }
-
-    renderColumn(amt, videos){
-        const entries = Object.entries(videos);
-
-        for(const [keys, val] of entries){
-            return console.log(keys + " ", val);
-        }
-    }
 
     showVideos(videos){
         if(videos == undefined){
@@ -28,7 +17,7 @@ class SearchBar extends React.Component{
                             <Grid.Column key={key}>
                                 <Container>
                                     <List.Item style={{ textAlign: "center"}}>
-                                        <img src={videos[key].snippet.thumbnails.default.url}/>
+                                        <img src={videos[key].snippet.thumbnails.default.url} alt={"alt for img"}/>
                                         <p style={{ maxWidth: "120px", overflow: "hidden", textOverflow: "ellipsis", height: "60px", margin: "0 auto" }}>{videos[key].snippet.title}</p>
                                     </List.Item>
                                     <Button onClick={this.props.addToQueue} id={key} style={{ width: "70%", margin: "10px auto", display: "flex", border: "none", background: "#7fffd4" }}>
