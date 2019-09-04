@@ -31,7 +31,7 @@ class App extends React.Component {
     let updatedPlaylist = [];
     const video = this.state.videos[id];
 
-    console.log('Video:', video)
+    //console.log('Video:', video)
 
     if(this.state.list.length > 0 && video !== undefined) {
 
@@ -51,39 +51,21 @@ class App extends React.Component {
     }
   }
 
+
   removeFromList = (event) => {
     // remove song from playlist
+    const id = event.currentTarget.id;
 
-    const id = event.target.id;
-    
-    // let list = [...this.state.list];
-
-    // let newlist = [];
-
-    // list.map(item => {
-    //     if(id !== item.id.videoId) {
-    //       newlist.push(item)
-    //     }
-    //     return newlist
-      // })
-
-    // this.setState({
-    //   list: [...newlist]
-    // })
-    
     let updatedPlaylist = [...this.state.list];
-    console.log("State playlist: ", this.state.list)
-    console.log("List before splice: ", updatedPlaylist);
+    updatedPlaylist.splice(id, 1);
 
-    let newList = updatedPlaylist.splice(id,1);
-
-    console.log("List after splice: ", updatedPlaylist);
-    console.log("List after splice: ", newList);
-    console.log("Removing vid with ID: ", id);
+    //Used to store deleted item. 
+    //let deletedItem = updatedPlaylist.splice(id,1);
+    //console.log(updatedPlaylist);
 
     this.setState({
-      list: [...updatedPlaylist]
-    })
+      list: updatedPlaylist,
+    });
 
   }
 
@@ -112,7 +94,7 @@ class App extends React.Component {
 
   render(){
 
-    console.log("Playlist from state: ", this.state.list)
+    //console.log("Playlist from state: ", this.state.list)
 
     return(
       <div>

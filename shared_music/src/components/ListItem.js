@@ -1,5 +1,5 @@
 import React from 'react';
-import { Container, List, Button } from 'semantic-ui-react';
+import { Container, List, Button, Icon } from 'semantic-ui-react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleUp, faAngleDown, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 
@@ -11,11 +11,28 @@ const ListItem = ({title, length, uploader, songDelete, id}) => (
             <FontAwesomeIcon icon={faAngleDown} size={"lg"}/>
         </div>
         <Container>
-            <List.Header as="a" style={{ marginBottom: "0" }}>{title}</List.Header>
+            <List.Header as="a" style={{ marginBottom: "0" }}>
+                {title}
+            </List.Header>
             <List.Description style={{ display: "inline-block", width: "75%", float: "left" }}>
-                <p style={{ marginRight: "5px", width: "60%", float:"left" }}><strong>Uploader:</strong> {uploader} </p><p style={{ float: "right"}}><strong>Length: </strong>{length}</p>
+                <p style={{ marginRight: "5px", width: "60%", float:"left" }}>
+                    <strong>Uploader:</strong> {uploader} 
+                </p>
+                <p style={{ float: "right"}}>
+                    <strong>Length: </strong>{length}
+                </p>
             </List.Description>
-            <Button onClick={songDelete} id={id} floated="right" size="mini" color="red" style={{ marginBottom: "auto"}}><FontAwesomeIcon icon={faTrashAlt} size={"lg"} /></Button>
+            <Button 
+                onClick={songDelete} 
+                id={id} 
+                floated="right" 
+                size="mini" 
+                color="red" 
+                style={{ marginBottom: "auto"}}
+                icon
+                >
+                    <Icon name="trash" />
+            </Button>
         </Container>
     </List.Item>
 )
