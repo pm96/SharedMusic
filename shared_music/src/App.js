@@ -53,33 +53,10 @@ class App extends React.Component {
 
   removeFromList = (event) => {
     // remove song from playlist
-
-    const id = event.target.id;
-    
-    // let list = [...this.state.list];
-
-    // let newlist = [];
-
-    // list.map(item => {
-    //     if(id !== item.id.videoId) {
-    //       newlist.push(item)
-    //     }
-    //     return newlist
-      // })
-
-    // this.setState({
-    //   list: [...newlist]
-    // })
+    const id = event.currentTarget.id;
     
     let updatedPlaylist = [...this.state.list];
-    console.log("State playlist: ", this.state.list)
-    console.log("List before splice: ", updatedPlaylist);
-
-    let newList = updatedPlaylist.splice(id,1);
-
-    console.log("List after splice: ", updatedPlaylist);
-    console.log("List after splice: ", newList);
-    console.log("Removing vid with ID: ", id);
+    updatedPlaylist.splice(id,1);
 
     this.setState({
       list: [...updatedPlaylist]

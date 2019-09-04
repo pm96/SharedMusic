@@ -15,7 +15,13 @@ const ListItem = ({title, length, uploader, songDelete, id}) => (
             <List.Description style={{ display: "inline-block", width: "75%", float: "left" }}>
                 <p style={{ marginRight: "5px", width: "60%", float:"left" }}><strong>Uploader:</strong> {uploader} </p><p style={{ float: "right"}}><strong>Length: </strong>{length}</p>
             </List.Description>
-            <Button onClick={songDelete} id={id} floated="right" size="mini" color="red" style={{ marginBottom: "auto"}}><FontAwesomeIcon icon={faTrashAlt} size={"lg"} /></Button>
+            <Button 
+                onClick={songDelete} 
+                id={id} floated="right" 
+                size="mini" color="red" 
+                style={{ marginBottom: "auto"}}>
+                    <FontAwesomeIcon icon={faTrashAlt} size={"lg"} />
+            </Button>
         </Container>
     </List.Item>
 )
