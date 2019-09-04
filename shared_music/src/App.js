@@ -3,31 +3,13 @@ import './App.css';
 import Playlist from './components/SongList';
 //import ListItem from './components/ListItem';
 //import DescriptionBar from './components/DescriptionBar';
-import SearchBar from './components/SearchBar';
+import SearchBar from './components/searchbar';
 import { Container, Header,  } from 'semantic-ui-react';
 import youtube from './apis/youtube';
 import API_KEY from './config.js';
 import VideoDetail from './components/VideoDetail';
 
 const KEY = API_KEY;
-
-// const playList = [
-//   {
-//     title: "Michael Jackson - Beat it",
-//     uploader: "Jokestar64",
-//     length: "3:43"
-//   }, 
-//   {
-//     title: "Kygo - Firestone",
-//     uploader: "noob_master69",
-//     length: "4:27"
-//   },
-//   {
-//     title: "Sean Paul - Press it up",
-//     uploader: "askSteve",
-//     length: "3:54"
-//   },
-
 
 class App extends React.Component {
     state = {
@@ -55,8 +37,9 @@ class App extends React.Component {
 
       updatedPlaylist = [...this.state.list, video];
       this.setState({
-        list: updatedPlaylist
-      })
+        list: updatedPlaylist,
+      });
+      
       
     } else {
 
@@ -67,12 +50,6 @@ class App extends React.Component {
 
     }
   }
-
-
-  creatingNewList = () => {
-
-  }
-
 
   removeFromList = (event) => {
     // remove song from playlist
@@ -115,25 +92,23 @@ class App extends React.Component {
     this.setState({term: event.target.value})
   }
 
-  
   onTermSubmit = async () => {
     const response = await youtube.get('/search', {
       params: {
         q: this.state.term,
         part: 'snippet',
         maxResults: 5,
+        type: 'video',
         key: KEY,
+        
       },
     });
-
+    
     this.setState({
       videos: response.data.items,
       selectedVideo: response.data.items[0],
     });
-
   }
-
-
 
   render(){
 
