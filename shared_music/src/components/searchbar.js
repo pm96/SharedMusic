@@ -1,5 +1,7 @@
 import React from 'react';
-import { Input, Grid } from 'semantic-ui-react';
+import { Input, Grid, List, Container, Button } from 'semantic-ui-react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPlus } from '@fortawesome/free-solid-svg-icons'
 
 class SearchBar extends React.Component{
     state = {
@@ -15,7 +17,20 @@ class SearchBar extends React.Component{
                     {console.log(videos)}
                     <Grid divided='vertically'>
                         <Grid.Row columns="5">
-                            <Grid.Column onClick={this.props.addToQueue}>
+                        { Object.entries(videos).map(([key,video]) => 
+                            <Grid.Column key={key}>
+                                <Container>
+                                    <List.Item style={{ textAlign: "center"}}>
+                                        <img src={videos[key].snippet.thumbnails.default.url}/>
+                                        <p style={{ maxWidth: "120px", overflow: "hidden", textOverflow: "ellipsis", height: "60px", margin: "0 auto" }}>{videos[key].snippet.title}</p>
+                                    </List.Item>
+                                    <Button onClick={this.props.addToQueue} id={key} style={{ width: "70%", margin: "10px auto", display: "flex", border: "none", background: "#7fffd4" }}>
+                                        Add to playlist
+                                    </Button>
+                                </Container>
+                            </Grid.Column>
+                        )}
+                            {/* <Grid.Column onClick={this.props.addToQueue}>
                                 <img src={videos[0].snippet.thumbnails.default.url}/>
                                 <p>{videos[0].snippet.title}</p>
                             </Grid.Column>
@@ -34,7 +49,8 @@ class SearchBar extends React.Component{
                             <Grid.Column onClick={this.props.addToQueue}>
                                 <img src={videos[4].snippet.thumbnails.default.url}/>
                                 <p>{videos[4].snippet.title}</p>
-                            </Grid.Column>
+                            </Grid.Column> */}
+
                         </Grid.Row>
                     </Grid>
                 </div>
@@ -43,7 +59,7 @@ class SearchBar extends React.Component{
     }
 
     render(){
-        const { term, onChange, onTermSubmit, videosToShow} = this.props;
+        const { term, onChange, onTermSubmit, videosToShow } = this.props;
         return(
             <div>
                 <Input 
