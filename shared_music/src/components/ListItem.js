@@ -15,11 +15,8 @@ const ListItem = ({title, length, uploader, songDelete, id, changeQueueOrder_AND
                 {title}
             </List.Header>
             <List.Description style={{ display: "inline-block", width: "75%", float: "left" }}>
-                <p style={{ marginRight: "5px", width: "60%", float:"left" }}>
+                <p style={{ marginRight: "5px", float:"left" }}>
                     <strong>Uploader:</strong> {uploader} 
-                </p>
-                <p style={{ float: "right"}}>
-                    <strong>Length: </strong>{length}
                 </p>
             </List.Description>
             <Button 

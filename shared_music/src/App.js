@@ -18,6 +18,7 @@ class App extends React.Component {
       videos: null,
       selectedVideo: null,
       list: [],
+      videoHistory: [],
   }
 
   componentDidMount() {
@@ -76,6 +77,29 @@ class App extends React.Component {
     })
   }
 
+  nextSong = () => {
+    let finishedVideo = this.state.selectedVideo;
+    let oldArray = this.state.list;
+    oldArray.splice(0,1);
+
+    this.setState({
+      videoHistory: finishedVideo,
+      list: oldArray,
+      selectedVideo: oldArray[0],
+    });
+  }
+
+  previousSong = () => {
+    let oldA = this.state.list;
+    oldA.unshift(this.state.videoHistory);
+
+    this.setState({
+      list:oldA,
+      selectedVideo: oldA[0],
+      videoHistory:[],
+    });
+  }
+
   changeQueueOrder_AND_playVideo = (event) => {
     let clickedID = event.currentTarget.id;
     let oldArr = this.state.list;
@@ -85,7 +109,7 @@ class App extends React.Component {
 
     oldArr.splice(clickedID,1);
 
-    oldArr.unshift(toStart); //noe funky herifra og ned også
+    oldArr.unshift(toStart);
  
     this.setState({
       list: oldArr,
@@ -108,16 +132,12 @@ class App extends React.Component {
         
       },
     });
-    
     this.setState({
       videos: response.data.items,
     });
   }
 
   render(){
-
-    //console.log("Playlist from state: ", this.state.list)
-
     return(
       <div>
         <Container style={{paddingTop:10}}>
@@ -135,7 +155,13 @@ class App extends React.Component {
             </div>
             <div className="seven wide column">
               <Playlist playlist={this.state.list} songDelete={this.removeFromList} changeQueueOrder_AND_playVideo={this.changeQueueOrder_AND_playVideo}/>
-              <Button content="empty list" disabled={this.state.list.length <1 ? true : false} onClick={this.emptyList}/>
+              <div style={{paddingTop:10, display:'flex', justifyContent:'space-between'}}>
+                <Button content="next song" disabled={this.state.list.length <2? true : false} onClick={this.nextSong} />
+                {//trenger logikk for når man kan ha denne disabled og ikke
+                }
+                <Button content="previous song" disabled={this.state.videoHistory.length <1 ? true : false} onClick={this.previousSong} /> 
+                <Button content="empty list" disabled={this.state.list.length <1 ? true : false} onClick={this.emptyList} />
+              </div>
             </div>
           </div>}
 
