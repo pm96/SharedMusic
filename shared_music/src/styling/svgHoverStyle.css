@@ -1,0 +1,11 @@
+.list-item-trash-svg:hover{
+    color: #db2828;
+}
+
+.list-item-angleDoubleUp-svg:hover{
+    color: #676868;
+}
+
+.list-item-angleUp-svg:hover{
+    color: #676868 !important;
+}

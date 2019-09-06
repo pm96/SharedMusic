@@ -1,14 +1,19 @@
 import React from 'react';
-import { Input, Grid, List, Container, Button } from 'semantic-ui-react';
+import { Input, Grid, List, Container, Button, Header } from 'semantic-ui-react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus, faPlusCircle } from '@fortawesome/free-solid-svg-icons'
 import '../styling/SearchBarItemContainerStyle.css';
 
 class SearchBar extends React.Component{
 
-    showVideos(videos){
-        if(videos == undefined){
+    showVideos(videos, value){
+        console.log(videos)
+        if(videos === null){
             return null;
+        } else if(videos.length < 1) {
+            return (
+                <Header as='h2' textAlign='center' color='grey' style={{ margin: '80px' }}>No videos for '<i style={{ color: "#f54646" }}>{value}</i>' was found..</Header>
+            );
         }else{
             return(
                 <div className="ui segment">
@@ -69,7 +74,7 @@ class SearchBar extends React.Component{
                 value={term} 
                 onChange={onChange}
                 />
-                {this.showVideos(videosToShow)}
+                {this.showVideos(videosToShow, this.props.value)}
             </div>
         ); 
     }   

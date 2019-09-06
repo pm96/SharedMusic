@@ -9,7 +9,7 @@ import youtube from './apis/youtube';
 import * as API from './config.js';
 import VideoDetail from './components/VideoDetail';
 
-const KEY = API.API_KEY_2;
+const KEY = API.API_KEY;
 
 class App extends React.Component {
     state = {
@@ -236,11 +236,11 @@ class App extends React.Component {
             <div className="seven wide column">
               <Playlist playlist={this.state.list} songDelete={this.removeFromList} changeQueueOrder_AND_playVideo={this.changeQueueOrder_AND_playVideo} moveSong={this.moveVideoInPlaylist}/>
               <div style={{paddingTop:10, display:'flex', justifyContent:'space-between'}}>
-                <Button content="next song" disabled={this.state.list.length <2? true : false} onClick={this.nextSong} />
+                <Button content="Next song" disabled={this.state.list.length <2? true : false} onClick={this.nextSong} />
                 {//trenger logikk for når man kan ha denne disabled og ikke
                 }
-                <Button content="previous song" disabled={this.state.videoHistory.length <1 ? true : false} onClick={this.previousSong} /> 
-                <Button content="empty list" disabled={this.state.list.length <1 ? true : false} onClick={this.emptyList} />
+                <Button content="Previous song" disabled={this.state.videoHistory.length <1 ? true : false} onClick={this.previousSong} /> 
+                <Button content="Clear list" disabled={this.state.list.length <1 ? true : false} onClick={this.emptyList} />
               </div>
             </div>
           </div>}
