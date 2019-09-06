@@ -24,6 +24,7 @@ class App extends React.Component {
     console.log("Mounted..")
   }
 
+//***  Functions relevant to playlist handling ***\\
 
   addToList = (event) => {
     // add song to playlist
@@ -66,6 +67,73 @@ class App extends React.Component {
   }
 
 
+  moveVideoInPlaylist = (event) => {
+    let playlist = [...this.state.list];
+    const buttonId = event.currentTarget.id; 
+
+    let numbericId = buttonId.includes("up") ? buttonId.substring(2) : buttonId.substring(4);
+    numbericId = parseInt(numbericId);
+
+    const itemToMove = playlist[numbericId];
+    // let affectedNeighbourItem;
+
+
+    if(buttonId.includes("up")) {
+      const affectedNeighbourItem = playlist[numbericId-1];
+      const newIndexForItem = numbericId-1;
+      const newindexForAffNeighbour = numbericId;
+
+      // Copying and inserting elements in the new position
+      playlist.splice(newIndexForItem,0,itemToMove);
+      playlist.splice(newindexForAffNeighbour,0,affectedNeighbourItem);
+
+      // Finding and removing the (old) elements
+      const indexOfOldElem = numbericId+1;
+      playlist.splice(indexOfOldElem,2);
+
+      // Alert when song is first in list and user tries to move it further up.
+      if(numbericId === 0) {
+        alert("The song is already at the top of the playlist")
+      } else {
+        
+        this.setState({
+          list: playlist
+        })
+
+      }
+      
+    } else {
+      
+      // Only completing movement as long as the item is not at the very bottom of the list.
+      if(numbericId < (playlist.length-1)) {
+
+        const affectedNeighbourItem = playlist[numbericId+1];
+        const newIndexForItem = numbericId+1;
+        const newindexForAffNeighbour = numbericId;
+
+        // Copying and inserting elements in the new position
+        playlist.splice(newIndexForItem,0,itemToMove);
+        playlist.splice(newindexForAffNeighbour,0,affectedNeighbourItem);
+
+        
+        // Finding and removing the (old) elements
+        const indexOfOldElem = numbericId+2;
+        playlist.splice(indexOfOldElem,2);
+
+
+        this.setState({
+          list: playlist
+        })
+
+
+      } else {
+        alert("The song is already at the bottom of the playlist")
+      }
+
+    }
+  }
+
+
   onInputChange = (event) => {
     this.setState({term: event.target.value})
   }
@@ -88,9 +156,21 @@ class App extends React.Component {
     });
   }
 
+  moveTest = () => {
+    let arr = this.state.list;
+    if(arr === []){
+      console.log("empty..")
+    } else { 
+      arr.copyWithin(1,2)
+      console.log("arr: ", arr)
+    }
+    
+  }
+
   render(){
 
-    //console.log("Playlist from state: ", this.state.list)
+    console.log("Playlist from state: ", this.state.list)
+    
 
     return(
       <div>
@@ -108,7 +188,7 @@ class App extends React.Component {
               <VideoDetail video={this.state.selectedVideo} />
             </div>
             <div className="seven wide column">
-              <Playlist playlist={this.state.list} songDelete={this.removeFromList} />
+              <Playlist playlist={this.state.list} songDelete={this.removeFromList} moveSong={this.moveVideoInPlaylist} />
             </div>
           </div>}
 
