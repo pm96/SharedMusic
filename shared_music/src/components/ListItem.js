@@ -5,8 +5,8 @@ import { faAngleUp, faAngleDown, faTrashAlt } from '@fortawesome/free-solid-svg-
 import '../styling/ListItemStyle.css';
 
 
-const ListItem = ({title, length, uploader, songDelete, moveSong, id}) => (
-    <List.Item className="list-item" style={{ margin: "10px 0"}}>
+const ListItem = ({title, uploader, songDelete, moveSong, id, changeQueueOrder_AND_playVideo}) => (
+    <List.Item className="list-item" style={{ margin: "10px 0"}} onClick={changeQueueOrder_AND_playVideo} id={id}>
         <div style={{ display: "inline-block", float: "left", margin: "0 10px 0 0", width: "35px", textAlign: "center"}}>
             <button onClick={moveSong} id={'up'+id} style={{ border: "none", backgroundColor: "transparent" }}>
                 <FontAwesomeIcon 
@@ -40,12 +40,9 @@ const ListItem = ({title, length, uploader, songDelete, moveSong, id}) => (
                 {title}
             </List.Header>
             <List.Description style={{ display: "inline-block", width: "75%", float: "left" }}>
-                <p style={{ marginRight: "5px", width: "60%", float:"left" }}>
+                <p style={{ marginRight: "5px", float:"left" }}>
                     <strong>Uploader:</strong> {uploader} 
                 </p>
-                {/* <p style={{ float: "right"}}>
-                    <strong>Length: </strong>{length}
-                </p> */}
             </List.Description>
             <Button 
                 onClick={songDelete} 

@@ -2,7 +2,7 @@ import React from 'react';
 import { List, Header } from 'semantic-ui-react'
 import ListItem from './ListItem'
 
-const Playlist = ({playlist, songDelete, moveSong}) => (
+const Playlist = ({playlist, songDelete, moveSong, changeQueueOrder_AND_playVideo}) => (
     <div className="list-container" >
         {playlist.length < 1 ? 
             <div style={{ height: "374px", display: "table-cell", verticalAlign: "middle", width: "487px", border: "5px solid #dededf", borderRadius: "1%", opacity: "0.3" }}><Header color={"grey"} style={{ textAlign: "center" }}>Click a video to add it to playlist</Header></div> 
@@ -16,6 +16,7 @@ const Playlist = ({playlist, songDelete, moveSong}) => (
                     uploader={item.snippet.channelTitle} 
                     songDelete={songDelete}
                     moveSong={moveSong}
+                    changeQueueOrder_AND_playVideo={changeQueueOrder_AND_playVideo}
                 />
             )}
         </List>}

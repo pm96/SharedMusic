@@ -4,7 +4,7 @@ import Playlist from './components/SongList';
 //import ListItem from './components/ListItem';
 //import DescriptionBar from './components/DescriptionBar';
 import SearchBar from './components/searchbar';
-import { Container, Header,  } from 'semantic-ui-react';
+import { Container, Header, Button,  } from 'semantic-ui-react';
 import youtube from './apis/youtube';
 import * as API from './config.js';
 import VideoDetail from './components/VideoDetail';
@@ -18,6 +18,7 @@ class App extends React.Component {
       videos: null,
       selectedVideo: null,
       list: [],
+      videoHistory: [],
   }
 
   componentDidMount() {
@@ -39,6 +40,7 @@ class App extends React.Component {
       updatedPlaylist = [...this.state.list, video];
       this.setState({
         list: updatedPlaylist,
+        selectedVideo: updatedPlaylist[0],
       });
       
       
@@ -47,25 +49,75 @@ class App extends React.Component {
       updatedPlaylist.push(video);
       this.setState({
         list: [...updatedPlaylist],
+        selectedVideo: updatedPlaylist[0],
       })
 
     }
   }
-
 
   removeFromList = (event) => {
     // remove song from playlist
     const id = event.currentTarget.id;
     
     let updatedPlaylist = [...this.state.list];
-    updatedPlaylist.splice(id,1);
+    updatedPlaylist.splice(id, 1);
+
+    //removes video from screen if nothing in queue
+    const videoValue = updatedPlaylist[0] !== null ? updatedPlaylist[0]: 'is === null';
 
     this.setState({
       list: updatedPlaylist,
+      selectedVideo: videoValue,
     });
 
   }
 
+  emptyList = () => {
+    this.setState({
+      list: [],
+      selectedVideo: null,  
+    })
+  }
+
+  nextSong = () => {
+    let finishedVideo = this.state.selectedVideo;
+    let oldArray = this.state.list;
+    oldArray.splice(0,1);
+
+    this.setState({
+      videoHistory: finishedVideo,
+      list: oldArray,
+      selectedVideo: oldArray[0],
+    });
+  }
+
+  previousSong = () => {
+    let oldA = this.state.list;
+    oldA.unshift(this.state.videoHistory);
+
+    this.setState({
+      list:oldA,
+      selectedVideo: oldA[0],
+      videoHistory:[],
+    });
+  }
+
+  changeQueueOrder_AND_playVideo = (event) => {
+    let clickedID = event.currentTarget.id;
+    let oldArr = this.state.list;
+
+
+    let toStart = oldArr[clickedID];
+
+    oldArr.splice(clickedID,1);
+
+    oldArr.unshift(toStart);
+ 
+    this.setState({
+      list: oldArr,
+      selectedVideo: oldArr[0],
+    });
+  }
 
   moveVideoInPlaylist = (event) => {
     let playlist = [...this.state.list];
@@ -149,10 +201,8 @@ class App extends React.Component {
         
       },
     });
-    
     this.setState({
       videos: response.data.items,
-      selectedVideo: response.data.items[0],
     });
   }
 
@@ -168,10 +218,6 @@ class App extends React.Component {
   }
 
   render(){
-
-    console.log("Playlist from state: ", this.state.list)
-    
-
     return(
       <div>
         <Container style={{paddingTop:10}}>
@@ -188,7 +234,14 @@ class App extends React.Component {
               <VideoDetail video={this.state.selectedVideo} />
             </div>
             <div className="seven wide column">
-              <Playlist playlist={this.state.list} songDelete={this.removeFromList} moveSong={this.moveVideoInPlaylist} />
+              <Playlist playlist={this.state.list} songDelete={this.removeFromList} changeQueueOrder_AND_playVideo={this.changeQueueOrder_AND_playVideo} moveSong={this.moveVideoInPlaylist}/>
+              <div style={{paddingTop:10, display:'flex', justifyContent:'space-between'}}>
+                <Button content="next song" disabled={this.state.list.length <2? true : false} onClick={this.nextSong} />
+                {//trenger logikk for når man kan ha denne disabled og ikke
+                }
+                <Button content="previous song" disabled={this.state.videoHistory.length <1 ? true : false} onClick={this.previousSong} /> 
+                <Button content="empty list" disabled={this.state.list.length <1 ? true : false} onClick={this.emptyList} />
+              </div>
             </div>
           </div>}
 
