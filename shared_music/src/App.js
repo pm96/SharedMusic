@@ -54,6 +54,7 @@ class App extends React.Component {
 
     }
   }
+  
 
   removeFromList = (event) => {
     // remove song from playlist
@@ -72,12 +73,14 @@ class App extends React.Component {
 
   }
 
+
   emptyList = () => {
     this.setState({
       list: [],
       selectedVideo: null,  
     })
   }
+
 
   nextSong = () => {
     let finishedVideo = this.state.selectedVideo;
@@ -91,6 +94,7 @@ class App extends React.Component {
     });
   }
 
+
   previousSong = () => {
     let oldA = this.state.list;
     oldA.unshift(this.state.videoHistory);
@@ -101,6 +105,7 @@ class App extends React.Component {
       videoHistory:[],
     });
   }
+
 
   changeQueueOrder_AND_playVideo = (event) => {
     let clickedID = event.currentTarget.id;
@@ -118,6 +123,7 @@ class App extends React.Component {
       selectedVideo: oldArr[0],
     });
   }
+
 
   moveVideoInPlaylist = (event) => {
     let playlist = [...this.state.list];
@@ -190,6 +196,7 @@ class App extends React.Component {
     this.setState({term: event.target.value})
   }
 
+
   onTermSubmit = async () => {
     const response = await youtube.get('/search', {
       params: {
@@ -205,17 +212,7 @@ class App extends React.Component {
       videos: response.data.items,
     });
   }
-
-  moveTest = () => {
-    let arr = this.state.list;
-    if(arr === []){
-      console.log("empty..")
-    } else { 
-      arr.copyWithin(1,2)
-      console.log("arr: ", arr)
-    }
-    
-  }
+  
 
   render(){
     return(

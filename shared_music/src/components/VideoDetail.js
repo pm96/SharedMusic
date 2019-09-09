@@ -13,7 +13,7 @@ const VideoDetail = ({video}) => {
             </Card>);
     }
 
-    const videoSrc = `https://www.youtube.com/embed/${video.id.videoId}?autoplay=1`;
+    const videoSrc = `https://www.youtube.com/embed/${video.id.videoId}?autoplay=0`;
 
     return (
         <div>
