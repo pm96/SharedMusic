@@ -26,3 +26,24 @@
     transform: rotate(360deg);
   }
 }
+
+
+.radio-btn-container {
+  width: 60%;
+  margin: 10px 0;
+}
+
+#radio-container-left {
+  margin: 0 10px 0 0;
+  display: inline-block;
+}
+
+#radio-container-right { 
+  margin: 0 0 0 10px;
+  display: inline-block;
+}
+
+.radio-btn {
+  margin: 0 0 0 5px;
+  vertical-align: middle;
+}

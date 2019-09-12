@@ -14,11 +14,14 @@ const KEY = API.API_KEY;
 class App extends React.Component {
     state = {
       term: '',
+      importedPlaylist: null,
       isLoading:false,
       videos: null,
       selectedVideo: null,
       list: [],
       videoHistory: [],
+      showPlaylistSearch: false,
+      displayItem: null,
   }
 
   componentDidMount() {
@@ -33,7 +36,6 @@ class App extends React.Component {
     let updatedPlaylist = [];
     const video = this.state.videos[id];
 
-    //console.log('Video:', video)
 
     if(this.state.list.length > 0 && video !== undefined) {
 
@@ -133,7 +135,6 @@ class App extends React.Component {
     numbericId = parseInt(numbericId);
 
     const itemToMove = playlist[numbericId];
-    // let affectedNeighbourItem;
 
 
     if(buttonId.includes("up")) {
@@ -212,37 +213,121 @@ class App extends React.Component {
       videos: response.data.items,
     });
   }
+
+
+  getPlaylist = async () => {
+    const response = await youtube.get('/playlistItems/', {
+      params: {
+        playlistId: this.state.term,
+        part: 'contentDetails,snippet',
+        maxResults: 25,
+        key: KEY,
+        
+      },
+    });
+    console.log("playlist RESPONSE: ", response)
+    this.setState({
+      importedPlaylist: response.data.items,
+      displayItem: response.data.items[0]
+    })
+
+  }
+
+
+  radioBtnHandler = (event) => {
+    const id = event.target.id;
+    console.log("radio-value: ", id)
+
+    if(id === "playlistSearchRadioBtn") { 
+      this.setState({
+        showPlaylistSearch: true
+      })
+    } else {
+      this.setState({
+        showPlaylistSearch: false
+      })
+    }
+
+  }
+
+  fromImportedToList = () => {
+    const imported = this.state.importedPlaylist;
+
+    this.setState({
+      list: imported,
+      term: '',
+      selectedVideo: imported[0],
+    })
+
+
+  }
   
 
   render(){
+
+    console.log("Imported list: ", this.state.importedPlaylist)
+
     return(
       <div>
         <Container style={{paddingTop:10}}>
           <Header as='h2' textAlign='center'>Music Share</Header>
+          
+          {/* SEARCH-BAR */}
           <SearchBar 
             value={this.state.term} 
             onChange={this.onInputChange} 
             onTermSubmit={this.onTermSubmit}
+            getPlaylist={this.getPlaylist}
+            playlistSearch={this.state.showPlaylistSearch}
             videosToShow={this.state.videos}
+            importedPlaylistToShow={this.state.importedPlaylist}
+            showItem={this.state.displayItem}
+            importPlaylist={this.fromImportedToList}
             addToQueue={this.addToList}
           />
-          {this.state.videos === null ? '' : <div className="ui container stackable divided relaxed two column grid" style={{ marginTop: 30}}>
-            <div className="nine wide column">
-              <VideoDetail video={this.state.selectedVideo} />
+
+          {/* SEARCH - RADIO-BUTTONS */}
+          <div className={"radio-btn-container"}>
+            <div id={"radio-container-left"}>
+              Video search <input type="radio" onChange={this.radioBtnHandler} checked={!this.state.showPlaylistSearch} id="videoSearchRadioBtn" className={"radio-btn"}/>
             </div>
-            <div className="seven wide column">
-              <Playlist playlist={this.state.list} songDelete={this.removeFromList} changeQueueOrder_AND_playVideo={this.changeQueueOrder_AND_playVideo} moveSong={this.moveVideoInPlaylist}/>
-              <div style={{paddingTop:10, display:'flex', justifyContent:'space-between'}}>
-                <Button content="Next song" disabled={this.state.list.length <2? true : false} onClick={this.nextSong} />
-                {//trenger logikk for når man kan ha denne disabled og ikke
-                }
-                <Button content="Previous song" disabled={this.state.videoHistory.length <1 ? true : false} onClick={this.previousSong} /> 
-                <Button content="Clear list" disabled={this.state.list.length <1 ? true : false} onClick={this.emptyList} />
+            <div id={"radio-container-right"}>
+              Import playlist with a Playlist Id <input type="radio" onChange={this.radioBtnHandler} checked={this.state.showPlaylistSearch} id="playlistSearchRadioBtn" className={"radio-btn"} />
+            </div>
+          </div>
+          {
+
+            /* VIDEO PLAYER */
+            <div className="ui container stackable divided relaxed two column grid" style={{ marginTop: 30}}>
+              <div className="nine wide column">
+                <VideoDetail video={this.state.selectedVideo} importedVideoList={this.state.importedPlaylist} playlistWithoutImporting={this.state.term}/>
+              </div>
+              <div className="seven wide column">
+                
+                {/* PLAYLIST */}
+                <Playlist 
+                  playlist={this.state.list} 
+                  songDelete={this.removeFromList} 
+                  changeQueueOrder_AND_playVideo={this.changeQueueOrder_AND_playVideo} 
+                  moveSong={this.moveVideoInPlaylist} 
+                  showPlaylistSearch={this.state.showPlaylistSearch}
+                  importPlaylist={this.fromImportedToList}  
+                  importedList={this.state.importedPlaylist}  
+                />
+
+                {/* PLAYLIST buttons */}
+                {<div style={{paddingTop:10, display:'flex', justifyContent:'space-between'}}>
+                  <Button content="Next song" disabled={this.state.list.length <2? true : false} onClick={this.nextSong} />
+                  {//trenger logikk for når man kan ha denne disabled og ikke
+                  }
+                  <Button content="Previous song" disabled={this.state.videoHistory.length <1 ? true : false} onClick={this.previousSong} /> 
+                  <Button content="Clear list" disabled={this.state.list.length <1 ? true : false} onClick={this.emptyList} />
+                </div>}
               </div>
             </div>
-          </div>}
+          }
 
-        </Container> 
+        </Container>
       </div>
     );
   }

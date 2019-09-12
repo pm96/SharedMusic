@@ -1,9 +1,10 @@
 import React from 'react';
-import { Container, List, Button } from 'semantic-ui-react';
+import { List, Button } from 'semantic-ui-react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleUp, faAngleDown, faTrashAlt, faAngleDoubleUp } from '@fortawesome/free-solid-svg-icons';
 import '../styling/ListItemStyle.css';
 import '../styling/svgHoverStyle.css';
+import '../styling/PlaylistItemContainerStyle.css';
 
 
 const ListItem = ({title, uploader, songDelete, moveSong, id, changeQueueOrder_AND_playVideo}) => (
@@ -40,7 +41,7 @@ const ListItem = ({title, uploader, songDelete, moveSong, id, changeQueueOrder_A
                 />
             </button>
         </div>
-        <Container style={{ margin: "auto", padding: "0 10px" }}>
+        <div className={"playlist-item-container"}>
             <List.Header as="a" style={{ marginBottom: "0" }} onClick={changeQueueOrder_AND_playVideo} id={id}>
                 {title}
             </List.Header>
@@ -49,7 +50,7 @@ const ListItem = ({title, uploader, songDelete, moveSong, id, changeQueueOrder_A
                     <strong>Uploader:</strong> {uploader} 
                 </p>
             </List.Description>
-        </Container>
+        </div>
         <div style={{ float: "right", display: "grid"}}>
                 <Button 
                     onClick={changeQueueOrder_AND_playVideo} 

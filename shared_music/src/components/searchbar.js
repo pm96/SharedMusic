@@ -1,7 +1,7 @@
 import React from 'react';
 import { Input, Grid, List, Container, Button, Header } from 'semantic-ui-react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlus, faPlusCircle } from '@fortawesome/free-solid-svg-icons'
+import { faPlus } from '@fortawesome/free-solid-svg-icons'
 import '../styling/SearchBarItemContainerStyle.css';
 
 class SearchBar extends React.Component{
@@ -60,21 +60,73 @@ class SearchBar extends React.Component{
         }
     }
 
-    render(){
-        const { term, onChange, onTermSubmit, videosToShow } = this.props;
-        return(
-            <div>
+
+    showPlaylistFound(playlist, value, importPlaylist, showItem) {
+
+        if(playlist === null) {
+            return null;
+        } else if(playlist.length < 1) {
+            return(
+                <Header as='h2' textAlign='center' color='grey' style={{ margin: '80px' }}>No videos for '<i style={{ color: "#f54646" }}>{value}</i>' was found..</Header>
+                )
+        } else {
+            return (
+                <div className="ui segment" style={{ display: "flex", border: "0", boxShadow: "0 0 0" }}> 
+                    <List.Item style={{ margin: "0 auto", border: "2px solid #bcbcbd", padding: "15px", borderRadius: "10px", backgroundColor: "#f3f3f3" }}>
+                        <div style={{ float: "left", marginRight: "10px" }} id={"playlist-img"}>
+                            <img src={showItem.snippet.thumbnails.medium.url} alt={"Thumbnail for playlist from Youtube"} onClick={importPlaylist} style={{ cursor: "pointer" }}></img>
+                        </div>
+                        <List.Description style={{ float: "right", marginLeft: "10px" }} id={"description"}>
+                            <p><strong>Uploader: </strong> <a href={"https://www.youtube.com/channel/"+playlist[0].snippet.channelId}>{playlist[0].snippet.channelTitle}</a></p>
+                            <p><strong>Playlist ID:</strong> {playlist[0].snippet.playlistId}</p>
+                        </List.Description>
+                    </List.Item>
+                </div>
+            );
+        }
+
+    }
+
+
+    chooseDisplay = (term, onChange, onTermSubmit, getPlaylist, playlistSearch) => {
+        
+        if(playlistSearch) {
+            return(
                 <Input 
-                placeholder='search song'
+                placeholder='Import a specific Playlist using its Playlist-Id'
                 action={{
-                    icon:'search',
-                    onClick: () => onTermSubmit()
+                    icon:'list alternate outline',
+                    onClick: () => getPlaylist()
                 }}
                 fluid
                 value={term} 
                 onChange={onChange}
                 />
-                {this.showVideos(videosToShow, this.props.value)}
+            )
+        } else {
+           return (
+                <Input 
+                    placeholder='Search for song'
+                    action={{
+                        icon:'search',
+                        onClick: () => onTermSubmit()
+                    }}
+                    fluid
+                    value={term} 
+                    onChange={onChange}
+                />
+            )
+        }
+
+    }
+
+    render(){
+        const { term, onChange, onTermSubmit, getPlaylist, videosToShow, playlistSearch, importedPlaylistToShow, importPlaylist, showItem } = this.props;
+        
+        return(
+            <div>
+                {this.chooseDisplay(term, onChange, onTermSubmit, getPlaylist, playlistSearch)}
+                {playlistSearch ? this.showPlaylistFound(importedPlaylistToShow, this.props.value, importPlaylist, showItem) : this.showVideos(videosToShow, this.props.value)}
             </div>
         ); 
     }   
